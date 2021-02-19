@@ -3,7 +3,6 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
 	"github.com/drjole/pufobs/internal"
 	"github.com/drjole/pufobs/pkg"
 	log "github.com/sirupsen/logrus"
@@ -12,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"strings"
 )
 
 var Overwrite bool
@@ -47,22 +47,6 @@ var downloadCmd = &cobra.Command{
 			log.Fatal(err)
 		}
 
-		page, err := http.Get(episode.URL)
-		defer func() {
-			if err := page.Body.Close(); err != nil {
-				log.Fatal(err)
-			}
-		}()
-
-		doc, err := goquery.NewDocumentFromReader(page.Body)
-		if err != nil {
-			log.Fatal(err)
-		}
-		href, ok := doc.Find(".powerpress_link_d").First().Attr("href")
-		if !ok {
-			log.Fatalf("error parsing podcast-ufo.fail")
-		}
-
 		if len(args) >= 2 {
 			filepath = args[1]
 		} else {
@@ -70,19 +54,16 @@ var downloadCmd = &cobra.Command{
 			if err != nil {
 				log.Fatal(err)
 			}
-			filename, ok := doc.Find(".powerpress_link_d").First().Attr("download")
-			if !ok {
-				log.Fatalf("error parsing podcast-ufo.fail")
-			}
+			filename := strings.ToLower(strings.ReplaceAll(episode.Title, " ", "_")) + ".mp3"
 			filepath = path.Join(wd, filename)
 		}
 
-		media, err := http.Get(href)
-		defer func() {
-			if err := page.Body.Close(); err != nil {
-				log.Fatal(err)
-			}
-		}()
+		fmt.Printf("Downloading episode \"%s\" to %s\n", episode.Title, filepath)
+
+		media, err := http.Get(episode.URL)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 		fp, err := os.Create(filepath)
 		defer func() {

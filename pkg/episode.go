@@ -18,7 +18,7 @@ func NewEpisodeFromFeed(item *gofeed.Item) *Episode {
 	return &Episode{
 		Title:       item.Title,
 		Description: item.Description,
-		URL:         item.Link,
+		URL:         item.Enclosures[0].URL,
 		Published:   item.PublishedParsed,
 	}
 }

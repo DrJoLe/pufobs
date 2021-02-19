@@ -11,7 +11,7 @@ import (
 
 const (
 	PUFO        = "\"DAS PODCAST UFO\""
-	PUFOFeedURL = "http://www.podcast-ufo.fail/?feed=rss2&cat=2"
+	PUFOFeedURL = "https://rss.acast.com/podcast-ufo"
 )
 
 func GetFeed() *gofeed.Feed {
