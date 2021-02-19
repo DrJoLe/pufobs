@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"github.com/mmcdole/gofeed"
+	"strings"
 	"testing"
 	"time"
 )
@@ -40,8 +41,8 @@ func TestEpisode_String(t *testing.T) {
 		"https://example.com",
 		&[]time.Time{time.Unix(0, 0)}[0],
 	}
-	expected := "Title - 1970-01-01T01:00:00+01:00"
-	if episode.String() != expected {
-		t.Fatalf(textExpectedTemplate, expected, episode.String())
+	expected := "Title - 1970-01-01T"
+	if !strings.HasPrefix(episode.String(), expected) {
+		t.Fatalf("expected prefix \"%s\" got \"%s\"", expected, episode.String())
 	}
 }
