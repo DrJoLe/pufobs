@@ -59,7 +59,7 @@ func NewDownloadCmd() *cobra.Command {
 				filepath = path.Join(wd, filename)
 			}
 
-			fmt.Printf("Downloading episode \"%s\" to %s\n", episode.Title, filepath)
+			_, _ = fmt.Fprintf(cmd.OutOrStdout(), "Downloading episode \"%s\" to %s\n", episode.Title, filepath)
 
 			media, err := http.Get(episode.URL)
 			if err != nil {
@@ -76,7 +76,7 @@ func NewDownloadCmd() *cobra.Command {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Printf("%d bytes written", n)
+			_, _ = fmt.Fprintf(cmd.OutOrStdout(), "%d bytes written", n)
 		},
 	}
 }

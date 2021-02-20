@@ -17,7 +17,7 @@ func NewCurrentCmd() *cobra.Command {
 			sort.Slice(episodes, func(i, j int) bool {
 				return episodes[i].Published.After(*episodes[j].Published)
 			})
-			fmt.Println(episodes[0])
+			_, _ = fmt.Fprintln(cmd.OutOrStdout(), episodes[0])
 		},
 	}
 }

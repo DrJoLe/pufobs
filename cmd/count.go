@@ -13,7 +13,7 @@ func NewCountCmd() *cobra.Command {
 		Long:  fmt.Sprintf("Print the number of currently available %s episodes", pkg.PUFO),
 		Run: func(cmd *cobra.Command, args []string) {
 			episodes := pkg.GetEpisodes()
-			fmt.Println(len(episodes))
+			_, _ = fmt.Fprintln(cmd.OutOrStdout(), len(episodes))
 		},
 	}
 }

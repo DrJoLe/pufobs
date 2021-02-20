@@ -14,7 +14,7 @@ func NewListCmd() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			episodes := pkg.GetEpisodes()
 			for _, e := range episodes {
-				fmt.Println(e.Title)
+				_, _ = fmt.Fprintln(cmd.OutOrStdout(), e.Title)
 			}
 		},
 	}
