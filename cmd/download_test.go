@@ -42,7 +42,7 @@ func TestNewDownloadCmd(t *testing.T) {
 	}
 
 	if stat.Size() != 57308181 {
-		t.Fatal("file is not 57308181 bytes long")
+		t.Fatalf("file is not 57308181 bytes long but %d", stat.Size())
 	}
 
 	_ = os.Remove("pufo.mp3")
