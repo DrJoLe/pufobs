@@ -19,12 +19,13 @@ var RootCmd = &cobra.Command{
 }
 
 func init() {
+	downloadCmd := NewDownloadCmd()
 	downloadCmd.PersistentFlags().BoolVarP(&Overwrite, "overwrite", "o", false, "overwrite existing files")
 
-	RootCmd.AddCommand(countCmd)
-	RootCmd.AddCommand(currentCmd)
+	RootCmd.AddCommand(NewCountCmd())
+	RootCmd.AddCommand(NewCurrentCmd())
 	RootCmd.AddCommand(downloadCmd)
-	RootCmd.AddCommand(listCmd)
+	RootCmd.AddCommand(NewListCmd())
 }
 
 func Execute() {
